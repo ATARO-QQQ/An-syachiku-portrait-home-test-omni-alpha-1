@@ -1,0 +1,119 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+<BODY BACKGROUND="研究紹介ページ デザイン 2024 02 25 背景 2024 02 25 2.png">
+<head>
+    <meta charset="utf-8">
+    <title>ナマイキスタジオ</title>
+    <link rel="icon" href="アンの社畜D アイコン 2024 11 12 低画質版 16.ico" type="image/x-icon">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    /* リセットCSS */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* ヘッダーのスタイル */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #333;
+      color: white;
+      padding: 10px 0;
+      text-align: center;
+      z-index: 1000; /* 他の要素の上に表示 */
+    }
+
+    /* コンテンツのスタイル */
+    .content {
+      margin-top: 60px; /* ヘッダー分のスペース */
+      padding: 20px;
+    }
+
+    /* クルーセルのスタイル */
+    .carousel {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .carousel img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .carousel-container {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .carousel-container img {
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    /* レスポンシブ対応 */
+    @media (max-width: 768px) {
+      header {
+        font-size: 14px;
+      }
+
+      .carousel img {
+        height: 250px; /* モバイル用に高さを調整 */
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        font-size: 12px;
+      }
+
+      .carousel img {
+        height: 200px; /* モバイル端末用にさらに調整 */
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ヘッダー -->
+  <header>
+    <h1>固定ヘッダーの例</h1>
+  </header>
+
+  <!-- コンテンツ -->
+  <div class="content">
+    
+    <!-- クルーセル -->
+    <div class="carousel">
+      <div class="carousel-container">
+        <img src="https://via.placeholder.com/1200x500?text=Slide+1" alt="Slide 1">
+        <img src="https://via.placeholder.com/1200x500?text=Slide+2" alt="Slide 2">
+        <img src="https://via.placeholder.com/1200x500?text=Slide+3" alt="Slide 3">
+      </div>
+    </div>
+
+    <h2>本文のタイトル</h2>
+    <p>こちらは本文の最初の部分です。ヘッダーが固定され、スクロールしても表示され続けます。</p>
+    <p>さらにコンテンツを追加していきます。ページをスクロールすると、クルーセルの画像が最初に表示され、その後に本文が表示されます。</p>
+  </div>
+
+  <script>
+    // クルーセル（スライダー）の自動切替
+    let index = 0;
+    const slides = document.querySelectorAll('.carousel-container img');
+    const totalSlides = slides.length;
+
+    setInterval(() => {
+      index = (index + 1) % totalSlides;
+      document.querySelector('.carousel-container').style.transform = `translateX(-${index * 100}%)`;
+    }, 3000);  // 3秒ごとにスライドを切り替え
+  </script>
+
+</body>
+</html>
