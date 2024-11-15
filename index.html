@@ -20,13 +20,65 @@
       top: 0;
       left: 0;
       width: 100%;
-      background-color: #333;
-      color: white;
+      background-color: #180614;
+      color: #fffffc;
       padding: 10px 0;
       text-align: center;
       z-index: 1000; /* 他の要素の上に表示 */
     }
 
+
+    /* ヘッダーナビゲーション */
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .header-content h1 {
+      font-size: 24px;
+    }
+
+    nav {
+      display: flex;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 15px;
+      margin-left: 20px;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    nav a:hover {
+      background-color: #555;
+    }
+
+    /* メニューがモバイル時にドロップダウンになるための準備 */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 25px;
+      cursor: pointer;
+    }
+
+    .menu-toggle div {
+      width: 100%;
+      height: 5px;
+      background-color: white;
+    }
+
+    .nav-links {
+      display: flex;
+    }
+    
     /* コンテンツのスタイル */
     .content {
       margin-top: 60px; /* ヘッダー分のスペース */
@@ -46,6 +98,18 @@
       display: block;
     }
 
+        /* 矢印ボタンのスタイル */
+    .carousel-prev, .carousel-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 10;
+    }
+
     .carousel-container {
       display: flex;
       transition: transform 0.5s ease-in-out;
@@ -59,7 +123,39 @@
     /* レスポンシブ対応 */
     @media (max-width: 768px) {
       header {
-        font-size: 14px;
+        padding: 10px 0;
+      }
+
+      .header-content h1 {
+        font-size: 20px;
+      }
+
+      nav {
+        display: none; /* デスクトップ時は非表示 */
+      }
+
+      .menu-toggle {
+        display: flex; /* メニューアイコンを表示 */
+      }
+
+      .nav-links {
+        display: none; /* メニューを隠す */
+        flex-direction: column;
+        width: 100%;
+        background-color: #333;
+        position: absolute;
+        top: 70px; /* ヘッダーの下に配置 */
+        left: 0;
+      }
+
+      .nav-links.active {
+        display: flex; /* メニューがアクティブな時に表示 */
+      }
+
+      nav a {
+        text-align: center;
+        padding: 15px;
+        width: 100%;
       }
 
       .carousel img {
@@ -68,9 +164,43 @@
     }
 
     @media (max-width: 480px) {
-      header {
-        font-size: 12px;
+      .header-content h1 {
+        font-size: 16px;
       }
+
+      .carousel img {
+        height: 200px; /* モバイル端末用にさらに調整 */
+      }
+    }
+
+    /* 769px 以上の端末（デスクトップなど） */
+    @media (min-width: 769px) {
+      header {
+        padding: 15px 0;
+      }
+
+      .header-content h1 {
+        font-size: 26px; /* デスクトップ向けにタイトルフォントを大きく */
+      }
+
+      nav {
+        display: flex; /* デスクトップでは横並び */
+      }
+
+      .menu-toggle {
+        display: none; /* デスクトップではメニューアイコンを非表示 */
+      }
+
+      .nav-links {
+        display: flex;
+        flex-direction: row; /* 横並び */
+      }
+
+      nav a {
+        padding: 10px 20px;
+        font-size: 18px;
+      }
+
 
       .carousel img {
         height: 200px; /* モバイル端末用にさらに調整 */
@@ -83,7 +213,24 @@
 
   <!-- ヘッダー -->
   <header>
-    <h1>固定ヘッダーの例</h1>
+    <div class="header-content">
+      <h1>固定ヘッダーの例</h1>
+      <!-- メニューアイコン（モバイル用） -->
+      <div class="menu-toggle" id="menu-toggle">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <!-- ナビゲーションメニュー -->
+      <nav>
+        <div class="nav-links">
+          <a href="#">ホーム</a>
+          <a href="#">サービス</a>
+          <a href="#">製品</a>
+          <a href="#">お問い合わせ</a>
+        </div>
+      </nav>
+    </div>
   </header>
 
   <!-- コンテンツ -->
@@ -96,6 +243,9 @@
         <img src="https://via.placeholder.com/1200x500?text=Slide+2" alt="Slide 2">
         <img src="https://via.placeholder.com/1200x500?text=Slide+3" alt="Slide 3">
       </div>
+      <!-- 左右の矢印ボタン -->
+      <span class="carousel-prev">&#10094;</span>
+      <span class="carousel-next">&#10095;</span>
     </div>
 
     <h2>本文のタイトル</h2>
@@ -104,15 +254,35 @@
   </div>
 
   <script>
-    // クルーセル（スライダー）の自動切替
+    // クルーセル（スライダー）の手動切替
     let index = 0;
     const slides = document.querySelectorAll('.carousel-container img');
     const totalSlides = slides.length;
 
-    setInterval(() => {
-      index = (index + 1) % totalSlides;
+    // 画像を表示する関数
+    function updateCarousel() {
       document.querySelector('.carousel-container').style.transform = `translateX(-${index * 100}%)`;
-    }, 3000);  // 3秒ごとにスライドを切り替え
+    }
+
+    // 次のスライドに移動
+    document.querySelector('.carousel-next').addEventListener('click', () => {
+      index = (index + 1) % totalSlides; // 次のスライド、ループする
+      updateCarousel();
+    });
+
+    // 前のスライドに戻る
+    document.querySelector('.carousel-prev').addEventListener('click', () => {
+      index = (index - 1 + totalSlides) % totalSlides; // 前のスライド、ループする
+      updateCarousel();
+    });
+
+    // メニュートグル（モバイル用）
+    const menuToggle = document.getElementById('menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
   </script>
 
 </body>
