@@ -150,19 +150,21 @@
         display: flex; /* メニューアイコンを表示 */
       }
 
-      .nav-links {
-        display: none; /* メニューを隠す */
-        flex-direction: column;
-        width: 100%;
-        background-color: #333;
-        position: absolute;
-        top: 70px; /* ヘッダーの下に配置 */
-        left: 0;
-      }
+.nav-links {
+  display: none; /* 初期状態では非表示 */
+  flex-direction: column;
+  width: 100%;
+  background-color: #333;
+  position: absolute;
+  top: 70px;
+  left: 0;
+  z-index: 999; /* メニューが他の要素の上に表示されるように */
+}
 
-      .nav-links.active {
-        display: flex; /* メニューがアクティブな時に表示 */
-      }
+.nav-links.active {
+  display: flex; /* active クラスが追加された時に表示 */
+}
+
 
       nav a {
         text-align: center;
